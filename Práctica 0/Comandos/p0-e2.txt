@@ -1,0 +1,45 @@
+##CACHE VACIA
+
+usuario@debian:~/Escritorio$ time -p find /usr > /dev/null
+real 1.37
+user 0.00
+sys 0.14
+
+##CACHE NO VACIA
+
+usuario@debian:~/Escritorio$ time -p find /usr > /dev/null
+real 0.02
+user 0.00
+sys 0.00
+
+##
+
+usuario@debian:~/Escritorio$ time -p dd if=/dev/zero of=/var/tmp/prueba count=1M1048576+0 registros leídos
+1048576+0 registros escritos
+536870912 bytes (537 MB) copiados, 1,61107 s, 333 MB/s
+real 1.64
+user 0.10
+sys 0.81
+
+##
+
+usuario@debian:~/Escritorio$ time -p dd if=/dev/zero of=/var/tmp/prueba oflag=direct count=100K
+102400+0 registros leídos
+102400+0 registros escritos
+52428800 bytes (52 MB) copiados, 5,59777 s, 9,4 MB/s
+real 5.63
+user 0.00
+sys 1.69
+
+##
+
+usuario@debian:~/Escritorio$ time -p dd if=/dev/urandom of=/var/tmp/prueba count=100K
+102400+0 registros leídos
+102400+0 registros escritos
+52428800 bytes (52 MB) copiados, 2,86395 s, 18,3 MB/s
+real 2.86
+user 0.00
+sys 2.69
+
+
+

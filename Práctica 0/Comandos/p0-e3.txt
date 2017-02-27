@@ -1,0 +1,61 @@
+COMANDO
+
+ps -U root -o uname,pri,pcpu,vsz,rss --sort -rss
+
+USER     PRI %CPU    VSZ   RSS
+root      19  0.3 134564 31784
+root      19  0.0  62036  3856
+root      19  0.0  75916  3732
+root      19  0.0  55908  3576
+root      19  0.0  57392  3236
+root      19  0.0   9964  2412
+root      19  0.0  21792  1768
+root      19  0.0  52776  1516
+root      19  0.0  21788  1368
+root      19  0.0  21788  1324
+root      19  0.0  16260   952
+root      19  0.0  16260   952
+root      19  0.0  16260   952
+root      19  0.0  16260   948
+root      19  0.0  16260   948
+root      19  0.0  16260   944
+root      19  0.0  35468   864
+root      19  0.0  20384   848
+root      19  0.0  10652   808
+root      19  0.0  47416   792
+root      19  0.0   4120   644
+root      19  0.0  15200   552
+root      19  0.0      0     0
+root      19  0.0      0     0
+root     139  0.0      0     0
+root     139  0.0      0     0
+root      39  0.0      0     0
+root      39  0.0      0     0
+root      19  0.0      0     0
+root      39  0.0      0     0
+root      19  0.0      0     0
+root      19  0.0      0     0
+root      39  0.0      0     0
+root      39  0.0      0     0
+root      19  0.0      0     0
+root      19  0.0      0     0
+root      14  0.0      0     0
+root       0  0.0      0     0
+root      19  0.0      0     0
+root      39  0.0      0     0
+root      39  0.0      0     0
+root      19  0.0      0     0
+root      19  0.0      0     0
+root      19  0.0      0     0
+root      19  0.0      0     0
+root      19  0.0      0     0
+root      19  0.0      0     0
+root      19  0.0      0     0
+root      39  0.0      0     0
+root      39  0.0      0     0
+root      39  0.0      0     0
+root      19  0.0      0     0
+root      19  0.0      0     0
+root      19  0.0      0     0
+root      19  0.0      0     0
+
