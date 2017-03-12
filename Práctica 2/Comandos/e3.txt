@@ -1,0 +1,25 @@
+usuario@debian:~/Escritorio/p2$ gcc -o edges edges.c -lprofiler
+usuario@debian:~/Escritorio/p2$ CPUPROFILE=/tmp/edges.prof ./edges img.pgm out.pgm
+PROFILE: interrupts/evictions/bytes = 369/266/20544
+usuario@debian:~/Escritorio/p2$ google-pprof --text edges /tmp/edges.prof
+Using local file edges.
+Using local file /tmp/edges.prof.
+Removing killpg from all stack traces.
+Total: 369 samples
+     236  64.0%  64.0%      236  64.0% gaussian
+     114  30.9%  94.9%      114  30.9% laplacian
+       6   1.6%  96.5%        6   1.6% fputc
+       4   1.1%  97.6%        4   1.1% _IO_getc
+       3   0.8%  98.4%        3   0.8% _init
+       3   0.8%  99.2%        7   1.9% load_image_file
+       2   0.5%  99.7%        9   2.4% save_image_file
+       1   0.3% 100.0%        1   0.3% __open
+       0   0.0% 100.0%        2   0.5% 0x00007fff4952c427
+       0   0.0% 100.0%        1   0.3% _IO_fgets
+       0   0.0% 100.0%        1   0.3% _IO_file_fopen
+       0   0.0% 100.0%        1   0.3% _IO_file_open
+       0   0.0% 100.0%      368  99.7% __libc_start_main
+       0   0.0% 100.0%      368  99.7% _start
+       0   0.0% 100.0%      350  94.9% edges
+       0   0.0% 100.0%      368  99.7% main
+

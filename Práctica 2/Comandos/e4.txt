@@ -1,0 +1,17 @@
+usuario@debian:~/Escritorio/p2$ gcc -o edges edges.c -lprofiler
+usuario@debian:~/Escritorio/p2$ time -p ./edges img.pgm out.pgm
+real 4.37
+user 4.09
+sys 0.05
+
+usuario@debian:~/Escritorio/p2$ gcc -o edges edges.c -lprofilerusuario@debian:~/Escritorio/p2$ time -p CPUPROFILE=/tmp/edges.conf ./edges img.pgm out.pgm 
+PROFILE: interrupts/evictions/bytes = 424/301/22624
+real 4.60
+user 3.96
+sys 0.26
+
+usuario@debian:~/Escritorio/p2$ time -p CPUPROFILE=/tmp/edges.prof CPUPROFILE_FREQUENCY=1000 CPUPROFILE_REALTIME=1 ./edges img.pgm out.pgm
+PROFILE: interrupts/evictions/bytes = 1565/984/72760
+real 4.84
+user 4.21
+sys 0.20

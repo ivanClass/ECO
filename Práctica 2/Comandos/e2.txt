@@ -1,0 +1,3 @@
+usuario@debian:~/Escritorio/p2$ gcc  -pg -O0  edges.c -o edges_gprof
+usuario@debian:~/Escritorio/p2$ ./edges_gprof img.pgm out_pgm
+usuario@debian:~/Escritorio/p2$ gprof edges_gprof gmon.out > analisis.txt
