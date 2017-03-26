@@ -1,0 +1,47 @@
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ gcc -g -o matrix1 matrix1.c 
+
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ perf stat -r 5 ./matrix1
+
+ Performance counter stats for './matrix1' (5 runs):
+
+        677,138501      task-clock (msec)         #    1,000 CPUs utilized            ( +-  0,39% )
+                 1      context-switches          #    0,002 K/sec                    ( +- 17,50% )
+                 0      cpu-migrations            #    0,000 K/sec                  
+               619      page-faults               #    0,914 K/sec                    ( +-  0,12% )
+     2.630.671.673      cycles                    #    3,885 GHz                      ( +-  0,16% )
+   <not supported>      stalled-cycles-frontend  
+   <not supported>      stalled-cycles-backend   
+     4.552.352.311      instructions              #    1,73  insns per cycle          ( +-  0,00% )
+       217.923.761      branches                  #  321,830 M/sec                    ( +-  0,00% )
+           367.308      branch-misses             #    0,17% of all branches          ( +-  0,06% )
+
+       0,677341930 seconds time elapsed                                         ( +-  0,39% )
+
+
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ perf stat -e L1-dcache-loads,L1-dcache-load-misses,L1-dcache-stores,L1-dcache-store-misses ./matrix1
+
+ Performance counter stats for './matrix1':
+
+     1.949.746.087      L1-dcache-loads                                             
+       266.319.197      L1-dcache-load-misses     #   13,66% of all L1-dcache hits  
+       434.957.370      L1-dcache-stores                                            
+   <not supported>      L1-dcache-store-misses   
+
+       0,698348513 seconds time elapsed
+
+
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ gcc -g -o matrix2 matrix2.c
+
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ perf stat -e L1-dcache-loads,L1-dcache-load-misses,L1-dcache-stores,L1-dcache-store-misses ./matrix2
+
+ Performance counter stats for './matrix2':
+
+     2.814.091.166      L1-dcache-loads                                             
+        27.390.859      L1-dcache-load-misses     #    0,97% of all L1-dcache hits  
+       434.946.178      L1-dcache-stores                                            
+   <not supported>      L1-dcache-store-misses   
+
+       0,608834616 seconds time elapsed
+
+
+

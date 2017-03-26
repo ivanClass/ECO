@@ -1,0 +1,264 @@
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ gcc -g -o edges edges.c 
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ man perf record
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ perf record ./edges img.pgm out.pgm
+WARNING: Kernel address maps (/proc/{kallsyms,modules}) are restricted,
+check /proc/sys/kernel/kptr_restrict.
+
+Samples in kernel functions may not be resolved if a suitable vmlinux
+file is not found in the buildid cache or in the vmlinux path.
+
+Samples in kernel modules won't be resolved at all.
+
+If some relocation was applied (e.g. kexec) symbols may be misresolved
+even with a suitable vmlinux or kallsyms file.
+
+Cannot read kernel map
+Couldn't record kernel reference relocation symbol
+Symbol resolution may be skewed if relocation was used (e.g. kexec).
+Check /proc/kallsyms permission or run as root.
+[ perf record: Woken up 2 times to write data ]
+[ perf record: Captured and wrote 0.465 MB perf.data (12166 samples) ]
+
+
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ perf report --stdio
+Warning:
+Kernel address maps (/proc/{kallsyms,modules}) were restricted.
+
+Check /proc/sys/kernel/kptr_restrict before running 'perf record'.
+
+As no suitable kallsyms nor vmlinux was found, kernel samples
+can't be resolved.
+
+Samples in kernel modules can't be resolved as well.
+
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 12K of event 'cycles:pp'
+# Event count (approx.): 11806578382
+#
+# Overhead  Command  Shared Object     Symbol                
+# ........  .......  ................  ......................
+#
+    75.95%  edges    edges             [.] gaussian          
+    21.68%  edges    edges             [.] laplacian         
+     0.80%  edges    libc-2.23.so      [.] _IO_getc          
+     0.77%  edges    libc-2.23.so      [.] fputc             
+     0.28%  edges    edges             [.] save_image_file   
+     0.17%  edges    edges             [.] load_image_file   
+     0.09%  edges    edges             [.] fputc@plt         
+     0.04%  edges    edges             [.] fgetc@plt         
+     0.03%  edges    [unknown]         [k] 0xffffffff810c3b00
+     0.03%  edges    [unknown]         [k] 0xffffffff81402957
+
+
+
+####################### AÑADIENDO OPCIÓN -g al muestreo ##########################
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ perf record -g ./edges img.pgm out.pgm
+WARNING: Kernel address maps (/proc/{kallsyms,modules}) are restricted,
+check /proc/sys/kernel/kptr_restrict.
+
+Samples in kernel functions may not be resolved if a suitable vmlinux
+file is not found in the buildid cache or in the vmlinux path.
+
+Samples in kernel modules won't be resolved at all.
+
+If some relocation was applied (e.g. kexec) symbols may be misresolved
+even with a suitable vmlinux or kallsyms file.
+
+Cannot read kernel map
+Couldn't record kernel reference relocation symbol
+Symbol resolution may be skewed if relocation was used (e.g. kexec).
+Check /proc/kallsyms permission or run as root.
+[ perf record: Woken up 5 times to write data ]
+[ perf record: Captured and wrote 1.115 MB perf.data (12166 samples) ]
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ perf report --stdio
+Warning:
+Kernel address maps (/proc/{kallsyms,modules}) were restricted.
+
+Check /proc/sys/kernel/kptr_restrict before running 'perf record'.
+
+As no suitable kallsyms nor vmlinux was found, kernel samples
+can't be resolved.
+
+Samples in kernel modules can't be resolved as well.
+
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 12K of event 'cycles:pp'
+# Event count (approx.): 11810204399
+#
+# Children      Self  Command  Shared Object     Symbol                
+# ........  ........  .......  ................  ......................
+#
+    99.97%     0.00%  edges    edges             [.] main              
+              |
+              ---main
+                 |          
+                 |--97.65%-- edges
+                 |          |          
+                 |          |--75.98%-- gaussian
+                 |          |          |          
+                 |          |          |--0.04%-- 0xffffffff818381b8
+                 |          |          |          0xffffffff8106b772
+
+
+
+####################### AÑADIENDO OPCIÓN -e FALLOS DE PAGINAS, FALLOS DE LECTURA, ESCRITURA EN LA L1 CACHE al muestreo ##########################
+
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ perf list
+
+List of pre-defined events (to be used in -e):
+
+  branch-instructions OR branches                    [Hardware event]
+  branch-misses                                      [Hardware event]
+  bus-cycles                                         [Hardware event]
+  cache-misses                                       [Hardware event]
+  cache-references                                   [Hardware event]
+  cpu-cycles OR cycles                               [Hardware event]
+  instructions                                       [Hardware event]
+  ref-cycles                                         [Hardware event]
+
+  alignment-faults                                   [Software event]
+  bpf-output                                         [Software event]
+  context-switches OR cs                             [Software event]
+  cpu-clock                                          [Software event]
+  cpu-migrations OR migrations                       [Software event]
+  dummy                                              [Software event]
+  emulation-faults                                   [Software event]
+  major-faults                                       [Software event]
+  minor-faults                                       [Software event]
+  page-faults OR faults                              [Software event]
+  task-clock                                         [Software event]
+
+  L1-dcache-load-misses                              [Hardware cache event]
+  L1-dcache-loads                                    [Hardware cache event]
+  L1-dcache-stores                                   [Hardware cache event]
+  L1-icache-load-misses                              [Hardware cache event]
+  LLC-load-misses                                    [Hardware cache event]
+  LLC-loads                                          [Hardware cache event]
+  LLC-store-misses                                   [Hardware cache event]
+
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ perf record -e page-faults,L1-dcache-load-misses ./edges img.pgm out.pgmWARNING: Kernel address maps (/proc/{kallsyms,modules}) are restricted,
+check /proc/sys/kernel/kptr_restrict.
+
+Samples in kernel functions may not be resolved if a suitable vmlinux
+file is not found in the buildid cache or in the vmlinux path.
+
+Samples in kernel modules won't be resolved at all.
+
+If some relocation was applied (e.g. kexec) symbols may be misresolved
+even with a suitable vmlinux or kallsyms file.
+
+Cannot read kernel map
+Couldn't record kernel reference relocation symbol
+Symbol resolution may be skewed if relocation was used (e.g. kexec).
+Check /proc/kallsyms permission or run as root.
+[ perf record: Woken up 1 times to write data ]
+[ perf record: Captured and wrote 0.122 MB perf.data (2638 samples) ]
+
+
+ivan@ivan-System-Product-Name:~/Escritorio/P3$ perf report --stdio
+Warning:
+Kernel address maps (/proc/{kallsyms,modules}) were restricted.
+
+Check /proc/sys/kernel/kptr_restrict before running 'perf record'.
+
+As no suitable kallsyms nor vmlinux was found, kernel samples
+can't be resolved.
+
+Samples in kernel modules can't be resolved as well.
+
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 8  of event 'page-faults'
+# Event count (approx.): 1059
+#
+# Overhead  Command  Shared Object     Symbol                
+# ........  .......  ................  ......................
+#
+    69.50%  edges    edges             [.] load_image_file   
+    27.10%  edges    libc-2.23.so      [.] _init             
+     2.55%  edges    ld-2.23.so        [.] dl_main           
+     0.47%  edges    [unknown]         [k] 0xffffffff8132a79a
+     0.19%  edges    [unknown]         [k] 0xffffffff814045e5
+     0.09%  edges    libc-2.23.so      [.] _exit             
+     0.09%  edges    [unknown]         [k] 0xffffffff81402ce5
+
+
+# Samples: 2K of event 'L1-dcache-load-misses'
+# Event count (approx.): 2113526
+#
+# Overhead  Command  Shared Object     Symbol                
+# ........  .......  ................  ......................
+#
+    34.75%  edges    edges             [.] gaussian          
+    13.00%  edges    [unknown]         [k] 0xffffffff81402957
+    11.05%  edges    edges             [.] laplacian         
+     7.43%  edges    [unknown]         [k] 0xffffffff81402ce5
+     4.56%  edges    libc-2.23.so      [.] fputc             
+     3.45%  edges    libc-2.23.so      [.] _IO_getc          
+     2.22%  edges    [unknown]         [k] 0xffffffff811c10de
+     2.22%  edges    [unknown]         [k] 0xffffffff81404806
+     1.64%  edges    [unknown]         [k] 0xffffffff81244802
+     1.32%  edges    [unknown]         [k] 0xffffffff81835e56
+     0.77%  edges    [unknown]         [k] 0xffffffff811c312e
+     0.67%  edges    [unknown]         [k] 0xffffffff8117bdec
+     0.67%  edges    [unknown]         [k] 0xffffffff81835da4
+     0.48%  edges    [unknown]         [k] 0xffffffff812f56f7
+     0.42%  edges    [unknown]         [k] 0xffffffff81190ad7
+     0.36%  edges    [unknown]         [k] 0xffffffff813fae12
+     0.30%  edges    [unknown]         [k] 0xffffffff812447ad
+     0.26%  edges    [unknown]         [k] 0xffffffff81245461
+     0.25%  edges    [unknown]         [k] 0xffffffff810394d7
+     0.25%  edges    [unknown]         [k] 0xffffffff8119fd08
+     0.24%  edges    [unknown]         [k] 0xffffffff81244919
+     0.23%  edges    [unknown]         [k] 0xffffffff81833f30
+     0.23%  edges    [unknown]         [k] 0xffffffff8129fb60
+     0.23%  edges    [unknown]         [k] 0xffffffff8119e31c
+     0.22%  edges    [unknown]         [k] 0xffffffff81245b4b
+     0.21%  edges    [unknown]         [k] 0xffffffff8118043d
+     0.21%  edges    [unknown]         [k] 0xffffffff8122b835
+     0.19%  edges    [unknown]         [k] 0xffffffff8113faf9
+     0.19%  edges    [unknown]         [k] 0xffffffff81180493
+     0.19%  edges    [unknown]         [k] 0xffffffff812509e4
+     0.17%  edges    [unknown]         [k] 0xffffffff810b50b5
+     0.17%  edges    [unknown]         [k] 0xffffffff8119005d
+     0.17%  edges    [unknown]         [k] 0xffffffff811804f3
+     0.15%  edges    [unknown]         [k] 0xffffffff8129d025
+     0.15%  edges    [unknown]         [k] 0xffffffff810e86d9
+     0.14%  edges    [unknown]         [k] 0xffffffff810c3b04
+     0.14%  edges    [unknown]         [k] 0xffffffff810f5170
+     0.13%  edges    [unknown]         [k] 0xffffffff81299533
+     0.13%  edges    [unknown]         [k] 0xffffffff8125120d
+     0.13%  edges    [unknown]         [k] 0xffffffff81171b86
+     0.13%  edges    [unknown]         [k] 0xffffffff8141e949
+     0.13%  edges    [unknown]         [k] 0xffffffff811957d6
+     0.13%  edges    [unknown]         [k] 0xffffffff811ec23d
+     0.13%  edges    [unknown]         [k] 0xffffffff81298985
+     0.13%  edges    [unknown]         [k] 0xffffffff811805cf
+     0.13%  edges    [unknown]         [k] 0xffffffff81228e53
+     0.13%  edges    [unknown]         [k] 0xffffffff814095d6
+     0.13%  edges    [unknown]         [k] 0xffffffff8129388f
+     0.13%  edges    [unknown]         [k] 0xffffffff8129b6dd
+     0.13%  edges    [unknown]         [k] 0xffffffff812450a5
+     0.13%  edges    [unknown]         [k] 0xffffffff8118eebf
+     0.13%  edges    [unknown]         [k] 0xffffffff811ec19b
+     0.12%  edges    [unknown]         [k] 0xffffffff814095dd
+     0.12%  edges    [unknown]         [k] 0xffffffff81402ce3
+
+###################### MUESTREANDO A DISTINTAS FRECUENCIAS DE MUESTREO Y CUENTAS DE EVENTOS #######
+https://perf.wiki.kernel.org/index.php/Tutorial#Sampling_with_perf_record
+
+COMPARAR CON GPROF GOOGLE-PPROF
+
+
+
