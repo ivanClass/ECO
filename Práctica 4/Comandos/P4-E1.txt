@@ -1,0 +1,65 @@
+usuario@debian:~/Escritorio/Comandos$ perf stat -r 5 ./matrix1
+
+ Performance counter stats for './matrix1' (5 runs):
+
+       1241,715543 task-clock                #    0,493 CPUs utilized            ( +-  3,17% )
+               333 context-switches          #    0,000 M/sec                    ( +-  3,93% )
+                 0 CPU-migrations            #    0,000 M/sec                  
+             2.215 page-faults               #    0,002 M/sec                    ( +-  0,01% )
+   <not supported> cycles                  
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+   <not supported> instructions            
+   <not supported> branches                
+   <not supported> branch-misses           
+
+       2,521031524 seconds time elapsed                                          ( +-  3,30% )
+
+
+usuario@debian:~/Escritorio/Comandos$ sudo su
+root@debian:/home/usuario/Escritorio/Comandos# echo 7500000 > /proc/sys/kernel/sched_min_granularity_ns
+
+
+
+
+usuario@debian:~/Escritorio/Comandos$ perf stat -r 5 ./matrix1
+
+ Performance counter stats for './matrix1' (5 runs):
+
+       1596,502852 task-clock                #    0,491 CPUs utilized            ( +-  4,49% )
+               291 context-switches          #    0,000 M/sec                    ( +-  4,63% )
+                 0 CPU-migrations            #    0,000 M/sec                  
+             2.215 page-faults               #    0,001 M/sec                  
+   <not supported> cycles                  
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+   <not supported> instructions            
+   <not supported> branches                
+   <not supported> branch-misses           
+
+       3,253820982 seconds time elapsed                                          ( +-  4,30% )
+
+root@debian:/home/usuario/Escritorio/Comandos# echo 75000000 > /proc/sys/kernel/sched_min_granularity_ns
+
+usuario@debian:~/Escritorio/Comandos$ perf stat -r 5 ./matrix1
+
+ Performance counter stats for './matrix1' (5 runs):
+
+       1238,615079 task-clock                #    0,493 CPUs utilized            ( +-  2,50% )
+               177 context-switches          #    0,000 M/sec                    ( +-  4,30% )
+                 0 CPU-migrations            #    0,000 M/sec                  
+             2.215 page-faults               #    0,002 M/sec                    ( +-  0,01% )
+   <not supported> cycles                  
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+   <not supported> instructions            
+   <not supported> branches                
+   <not supported> branch-misses           
+
+       2,514931147 seconds time elapsed                                          ( +-  3,23% )
+
+
+root@debian:/home/usuario/Escritorio/Comandos# sysctl -w kernel.sched_min_granularity_ns=750000
+kernel.sched_min_granularity_ns = 750000
+
+

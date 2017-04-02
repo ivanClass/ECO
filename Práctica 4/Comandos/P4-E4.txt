@@ -1,0 +1,44 @@
+root@debian:/home/usuario/Escritorio/Comandos# hdparm -I /dev/sda5
+
+/dev/sda5:
+
+ATA device, with non-removable media
+	Model Number:       VBOX HARDDISK                           
+	Serial Number:      VBfbb4afb9-f2333f6a 
+	Firmware Revision:  1.0     
+Standards:
+	Used: ATA/ATAPI-6 published, ANSI INCITS 361-2002 
+	Supported: 6 5 4 
+Configuration:
+	Logical		max	current
+	cylinders	16383	16383
+	heads		16	16
+	sectors/track	63	63
+	--
+	CHS current addressable sectors:   16514064
+	LBA    user addressable sectors:   20971520
+	LBA48  user addressable sectors:   20971520
+	Logical/Physical Sector size:           512 bytes
+	device size with M = 1024*1024:       10240 MBytes
+	device size with M = 1000*1000:       10737 MBytes (10 GB)
+	cache/buffer size  = 256 KBytes (type=DualPortCache)
+Capabilities:
+	LBA, IORDY(cannot be disabled)
+	Queue depth: 32
+	Standby timer values: spec'd by Vendor, no device specific minimum
+	R/W multiple sector transfer: Max = 128	Current = 128
+	DMA: mdma0 mdma1 mdma2 udma0 udma1 udma2 udma3 udma4 udma5 *udma6 
+	     Cycle time: min=120ns recommended=120ns
+	PIO: pio0 pio1 pio2 pio3 pio4 
+	     Cycle time: no flow control=120ns  IORDY flow control=120ns
+Commands/features:
+	Enabled	Supported:
+	   *	Power Management feature set
+	   *	Write cache
+	   *	Look-ahead
+	   *	48-bit Address feature set
+	   *	Mandatory FLUSH_CACHE
+	   *	FLUSH_CACHE_EXT
+	   *	Gen2 signaling speed (3.0Gb/s)
+	   *	Native Command Queueing (NCQ)
+Checksum: correct
